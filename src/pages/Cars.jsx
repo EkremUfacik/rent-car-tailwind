@@ -4,14 +4,17 @@ import CarCard from "../components/CarCard";
 import CarsNav from "../components/CarsNav";
 import useCarCalls from "../hooks/useCarCalls";
 import { useSelector } from "react-redux";
+import loadingImg from "../asset/loading.png";
 
 const Cars = () => {
   const { startDate, endDate, diffDays } = useSelector((state) => state.rent);
   const navigate = useNavigate();
   const { getCars } = useCarCalls();
+  const { loading } = useSelector((state) => state.rent);
 
   // const { sd, ed, diffDays } = state ? state : [];
   const [cars, setCars] = useState([]);
+  console.log(loading);
 
   useEffect(() => {
     if (diffDays) {
@@ -26,13 +29,20 @@ const Cars = () => {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <CarsNav />
-      <div className="p-4 flex flex-wrap justify-center gap-2 py-10 min-h-screen">
-        {cars.map((car, index) => (
-          <CarCard key={index} car={car} diffDays={diffDays} />
-        ))}
-      </div>
+
+      {loading ? (
+        <div className="h-screen flex justify-center loading-div">
+          <img className="mt-20" src={loadingImg} alt="loading" />
+        </div>
+      ) : (
+        <div className="p-4 flex flex-wrap justify-center gap-2 py-10 min-h-screen">
+          {cars.map((car, index) => (
+            <CarCard key={index} car={car} diffDays={diffDays} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

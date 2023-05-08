@@ -13,6 +13,7 @@ const rentSlice = createSlice({
   name: "rent",
   initialState: {
     clickSign: false,
+    loading: false,
     startDate: new Date(),
     endDate: afterDay,
     startTime: null,
@@ -24,6 +25,12 @@ const rentSlice = createSlice({
   reducers: {
     clickSignButton: (state) => {
       state.clickSign = !state.clickSign;
+    },
+    fetchStart: (state) => {
+      state.loading = true;
+    },
+    fetchEnd: (state) => {
+      state.loading = false;
     },
     setDate: (state, { payload: { data, url } }) => {
       state[url] = data;
@@ -55,5 +62,7 @@ export const {
   setDate,
   changePickupCity,
   changeReturnCity,
+  fetchStart,
+  fetchEnd,
 } = rentSlice.actions;
 export default rentSlice.reducer;
