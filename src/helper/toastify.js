@@ -1,4 +1,4 @@
-import { Flip, Slide, Zoom, toast } from "react-toastify";
+import { Flip, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const toastSuccess = (msg) => {
