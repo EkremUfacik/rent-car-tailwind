@@ -16,8 +16,7 @@ import { FcCalendar } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useCarCalls from "../hooks/useCarCalls";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import Confirm from "./Confirm";
 
 const CarCard = ({ car }) => {
   const {
@@ -35,6 +34,7 @@ const CarCard = ({ car }) => {
   const { firstName, lastName } = useSelector((state) => state.auth);
 
   const [isFlipped, setIsFlipped] = useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   // console.log(startDate.toLocaleDateString("tr-TR"));
@@ -46,23 +46,6 @@ const CarCard = ({ car }) => {
     const ed = new Date(endDate).toLocaleDateString("en-CA");
     postReservation(car.id, sd, ed);
     navigate("/myreservations");
-  };
-
-  const submit = () => {
-    confirmAlert({
-      title: "Rezervasyonunuz oluşturulacak.",
-      message: "Emin misiniz?",
-      buttons: [
-        {
-          label: "Evet",
-          onClick: handleReservation,
-        },
-        {
-          label: "Hayır",
-          // onClick: () => alert("Click No"),
-        },
-      ],
-    });
   };
 
   return (
@@ -232,11 +215,14 @@ const CarCard = ({ car }) => {
           <div className="text-center mt-6">
             <button
               className="bg-secondary text-white ml-0 mx-auto mt-3 py-2 px-4 rounded-full  font-semibold hover:bg-red-600 transition"
-              onClick={submit}
+              onClick={() => setOpen(true)}
             >
               Rezervasyon Oluştur
             </button>
           </div>
+          {open && (
+            <Confirm handleReservation={handleReservation} setOpen={setOpen} />
+          )}
         </div>
       </div>
     </div>
