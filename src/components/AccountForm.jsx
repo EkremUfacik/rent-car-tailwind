@@ -10,8 +10,8 @@ const AccountForm = () => {
   const dispatch = useDispatch();
 
   const initialState = {
-    email: "",
-    password: "",
+    email: "aa@aa.com",
+    password: "Aa123456.",
   };
 
   const [loginInfo, setLoginInfo] = useState(initialState);
